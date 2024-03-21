@@ -5,15 +5,23 @@
         <groupId>com.jt</groupId>
         <artifactId>JTWORLD</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>JT-LEARNING</artifactId>
+    <artifactId>LEARNING-MINIO</artifactId>
     <packaging>jar</packaging>
 
-    <name>JT-LEARNING</name>
+    <name>LEARNING-MINIO</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.9</version>
+        </dependency>
+    </dependencies>
 </project>
