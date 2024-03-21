@@ -1,9 +1,8 @@
-package com.jt.config;
+package com.jt.configuration;
 
+import com.jt.core.MinioTemplate;
 import com.jt.properties.OssProperties;
-import com.jt.template.MinioTemplate;
 import io.minio.MinioClient;
-import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -11,17 +10,17 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
+@Configuration
 @ConditionalOnClass({MinioClient.class})
-@EnableConfigurationProperties({OssProperties.class, MinioTemplate.class})
-@ConditionalOnExpression("${oss.enabled}")
+@EnableConfigurationProperties(OssProperties.class)
+@ConditionalOnExpression("${oss.enabled}") // 是否开启该配置
 @ConditionalOnProperty(value = "oss.type", havingValue = "minio")
-public class MinioConfiguration {
-
+public class OssConfiguration {
 
     @Bean
-    @SneakyThrows
     @ConditionalOnMissingBean(MinioClient.class)
     public MinioClient minioClient(OssProperties ossProperties) {
         return MinioClient.builder()

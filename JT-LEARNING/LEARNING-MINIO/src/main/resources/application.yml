@@ -2,8 +2,9 @@ server:
   port: 9003
 oss:
   enabled: true
-  type: MINIO
+  type: minio
   endpoint: http://127.0.0.1:9002
+  bucket-name: jt.img
   access-key: UdI0yBktbrLUlA99kofG
-  secret-key: secucIaU0rWhY5X2bKAFpJkScpVWKfabv8PxzQkjhU
-  default-bucket-name: jt.img
+  secret-key: cucIaU0rWhY5X2bKAFpJkScpVWKfabv8PxzQkjhU
+

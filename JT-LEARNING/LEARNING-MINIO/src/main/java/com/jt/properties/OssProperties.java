@@ -1,13 +1,12 @@
 package com.jt.properties;
 
-import com.jt.constant.OssType;
+import com.jt.enums.OssType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
 @ConfigurationProperties(prefix = "oss")
 public class OssProperties {
-
     /**
      * 是否开启
      */
@@ -36,5 +35,6 @@ public class OssProperties {
     /**
      * 默认存储桶名，没有指定时，会放在默认的存储桶
      */
-    String defaultBucketName;
+    String bucketName;
+
 }

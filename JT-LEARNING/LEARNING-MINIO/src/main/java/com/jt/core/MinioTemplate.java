@@ -1,8 +1,8 @@
-package com.jt.template;
+package com.jt.core;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.jt.entity.OssFile;
+import com.jt.oo.OssFile;
 import com.jt.properties.OssProperties;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
@@ -100,7 +100,7 @@ public class MinioTemplate {
         String uuidFileName = generateOssUuidFileName(originalFileName);
         try {
             if (StrUtil.isEmpty(bucketName)) {
-                bucketName = ossProperties.getDefaultBucketName();
+                bucketName = ossProperties.getBucketName();
             }
             minioClient.putObject(
                     PutObjectArgs.builder().bucket(bucketName).object(uuidFileName).stream(
@@ -192,14 +192,13 @@ public class MinioTemplate {
      */
     @PostConstruct
     public void initDefaultBucket() {
-        String defaultBucketName = ossProperties.getDefaultBucketName();
+        String defaultBucketName = ossProperties.getBucketName();
         if (bucketExists(defaultBucketName)) {
             log.info("默认存储桶已存在");
         } else {
             log.info("创建默认存储桶");
-            makeBucket(ossProperties.getDefaultBucketName());
+            makeBucket(ossProperties.getBucketName());
         }
         ;
     }
 }
-

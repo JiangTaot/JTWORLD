@@ -1,4 +1,4 @@
-package com.jt.constant;
+package com.jt.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
