@@ -1,7 +1,7 @@
 package com.jt.configuration;
 
 import com.jt.core.MinioTemplate;
-import com.jt.properties.OssProperties;
+import com.jt.configuration.properties.OssProperties;
 import io.minio.MinioClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

@@ -3,7 +3,7 @@ package com.jt.core;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jt.oo.OssFile;
-import com.jt.properties.OssProperties;
+import com.jt.configuration.properties.OssProperties;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.GetPresignedObjectUrlArgs;

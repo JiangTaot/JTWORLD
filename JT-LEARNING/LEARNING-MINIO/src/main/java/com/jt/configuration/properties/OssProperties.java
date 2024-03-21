@@ -1,4 +1,4 @@
-package com.jt.properties;
+package com.jt.configuration.properties;
 
 import com.jt.enums.OssType;
 import lombok.Data;
