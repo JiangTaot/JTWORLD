@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 
 
 @ConditionalOnClass({MinioClient.class})
-@EnableConfigurationProperties(OssProperties.class)
+@EnableConfigurationProperties({OssProperties.class, MinioTemplate.class})
 @ConditionalOnExpression("${oss.enabled}")
 @ConditionalOnProperty(value = "oss.type", havingValue = "minio")
 public class MinioConfiguration {
