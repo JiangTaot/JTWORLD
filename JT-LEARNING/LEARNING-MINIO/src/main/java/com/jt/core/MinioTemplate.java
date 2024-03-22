@@ -2,8 +2,8 @@ package com.jt.core;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.jt.oo.OssFile;
 import com.jt.configuration.properties.OssProperties;
+import com.jt.oo.OssFile;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.GetPresignedObjectUrlArgs;
@@ -14,12 +14,14 @@ import io.minio.PostPolicy;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveBucketArgs;
 import io.minio.Result;
+import io.minio.StatObjectArgs;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -104,7 +106,7 @@ public class MinioTemplate {
             }
             minioClient.putObject(
                     PutObjectArgs.builder().bucket(bucketName).object(uuidFileName).stream(
-                            inputStream, inputStream.available(), -1)
+                                    inputStream, inputStream.available(), -1)
                             .build());
             return new OssFile(uuidFileName, originalFileName);
         } finally {
@@ -157,11 +159,11 @@ public class MinioTemplate {
                 ListObjectsArgs.builder().bucket(bucketName).recursive(recursive).build());
     }
 
-	/**
+    /**
      * 生成随机文件名，防止重复
      *
      * @param originalFilename 原始文件名
-     * @return 
+     * @return
      */
     public String generateOssUuidFileName(String originalFilename) {
         return "files" + StrUtil.SLASH + DateUtil.format(new Date(), "yyyy-MM-dd") + StrUtil.SLASH + UUID.randomUUID() + StrUtil.SLASH + originalFilename;
@@ -199,6 +201,18 @@ public class MinioTemplate {
             log.info("创建默认存储桶");
             makeBucket(ossProperties.getBucketName());
         }
-        ;
+    }
+
+    public String getPreviewUrl(String fileName, String bucketName) {
+        if (StringUtils.isNotBlank(fileName)) {
+            bucketName = StringUtils.isNotBlank(bucketName) ? bucketName : ossProperties.getBucketName();
+            try {
+                minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(fileName).build());
+                return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().method(Method.GET).bucket(bucketName).object(fileName).build());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
