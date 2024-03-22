@@ -6,5 +6,7 @@ public interface FileService {
 
     Object upload(InputStream inputStream, String bucketName, String originalFilename);
 
-    String preview(String fileName, String bucketName);
+    String download(String fileName, String bucketName);
+
+    String presigned(String filePath, String bucketName);
 }

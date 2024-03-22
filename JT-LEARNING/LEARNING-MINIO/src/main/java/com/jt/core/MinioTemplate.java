@@ -203,12 +203,12 @@ public class MinioTemplate {
         }
     }
 
-    public String getPreviewUrl(String fileName, String bucketName) {
+    public String getPreviewUrl(String fileName, String ossFilePath) {
         if (StringUtils.isNotBlank(fileName)) {
-            bucketName = StringUtils.isNotBlank(bucketName) ? bucketName : ossProperties.getBucketName();
+            ossFilePath = StringUtils.isNotBlank(ossFilePath) ? ossFilePath : ossProperties.getBucketName();
             try {
-                minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(fileName).build());
-                return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().method(Method.GET).bucket(bucketName).object(fileName).build());
+                minioClient.statObject(StatObjectArgs.builder().bucket(ossFilePath).object(fileName).build());
+                return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().method(Method.GET).bucket(ossFilePath).object(fileName).build());
             } catch (Exception e) {
                 e.printStackTrace();
             }

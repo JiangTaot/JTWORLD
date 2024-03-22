@@ -4,7 +4,7 @@ oss:
   enabled: true
   type: minio
   endpoint: http://127.0.0.1:9002
-  bucket-name: jt.img
+  bucket-name: default.bucket
   access-key: UdI0yBktbrLUlA99kofG
   secret-key: cucIaU0rWhY5X2bKAFpJkScpVWKfabv8PxzQkjhU
 

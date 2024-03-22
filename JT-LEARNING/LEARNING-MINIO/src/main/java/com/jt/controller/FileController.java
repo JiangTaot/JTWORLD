@@ -23,9 +23,14 @@ public class FileController {
         return fileService.upload(file.getInputStream(), bucketName, file.getOriginalFilename());
     }
 
-    @PostMapping("/preview")
-    public String preview(String fileName, String bucketName) {
-        return fileService.preview(fileName, bucketName);
+    @PostMapping("/download")
+    public String download(String filePath, String bucketName) {
+        return fileService.download(filePath, bucketName);
+    }
+
+    @PostMapping("/presigned")
+    public String presigned(String filePath, String bucketName) {
+        return fileService.presigned(filePath, bucketName);
     }
 
 }

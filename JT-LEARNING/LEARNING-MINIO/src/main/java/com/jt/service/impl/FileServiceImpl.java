@@ -23,7 +23,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String preview(String fileName, String bucketName) {
+    public String download(String fileName, String bucketName) {
         return minioTemplate.getPreviewUrl(fileName, bucketName);
+    }
+
+    @Override
+    public String presigned(String filePath, String bucketName) {
+        return minioTemplate.getPresignedObjectUrl(bucketName, filePath);
     }
 }
