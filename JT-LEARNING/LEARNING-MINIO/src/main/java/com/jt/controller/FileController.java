@@ -17,4 +17,6 @@ public class FileController {
     public Object upload(MultipartFile file, String bucketName) throws IOException {
         return minioTemplate.putObject(file.getInputStream(), bucketName, file.getOriginalFilename());
     }
+
+
 }
