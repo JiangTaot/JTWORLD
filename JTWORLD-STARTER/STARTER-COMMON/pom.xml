@@ -6,17 +6,15 @@
         <artifactId>JTWORLD-STARTER</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
+    <!--通用模块-->
+    <name>STARTER-COMMON</name>
     <artifactId>STARTER-COMMON</artifactId>
     <packaging>jar</packaging>
 
-    <name>STARTER-COMMON</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 </project>
