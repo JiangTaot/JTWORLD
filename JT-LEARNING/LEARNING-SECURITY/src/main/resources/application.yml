@@ -1,2 +1,8 @@
 server:
   port: 8888
+
+
+secure:
+  ignored:
+    urls: # 安全路径白名单
+      - /test/**
