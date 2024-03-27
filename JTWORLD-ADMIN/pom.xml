@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.jt</groupId>
-            <artifactId>STARTER-COMMON</artifactId>
+            <artifactId>STARTER-SECURITY</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
