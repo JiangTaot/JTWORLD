@@ -36,6 +36,8 @@
         <druid.version>1.2.6</druid.version>
         <mysql.version>8.0.29</mysql.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <velocity.version>1.7</velocity.version>
+        <velocity-tools.version>2.0</velocity-tools.version>
     </properties>
 
     <!--全局依赖版本管理-->
@@ -71,6 +73,16 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-tools</artifactId>
+                <version>${velocity-tools.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
