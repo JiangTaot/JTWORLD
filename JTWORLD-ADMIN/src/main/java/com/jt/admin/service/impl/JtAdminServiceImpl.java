@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> implements JtAdminService {
 
+    @Override
+    public String getAdminName() {
+        return this.baseMapper.selectList(null).get(0).getUsername();
+    }
 }

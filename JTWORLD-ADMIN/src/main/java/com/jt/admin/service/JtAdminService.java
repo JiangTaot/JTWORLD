@@ -13,4 +13,6 @@ import com.jt.admin.entity.JtAdmin;
  */
 public interface JtAdminService extends IService<JtAdmin> {
 
+    String getAdminName();
+
 }
