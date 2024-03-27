@@ -33,6 +33,9 @@
         <skipTests>true</skipTests>
         <hutool.version>5.8.9</hutool.version>
         <lombok.version>1.18.22</lombok.version>
+        <druid.version>1.2.6</druid.version>
+        <mysql.version>8.0.29</mysql.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
     </properties>
 
     <!--全局依赖版本管理-->
@@ -47,6 +50,27 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <!--数据源相关-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

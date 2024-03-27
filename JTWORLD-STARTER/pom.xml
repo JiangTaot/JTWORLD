@@ -13,6 +13,7 @@
     <name>JTWORLD-STARTER</name>
     <modules>
         <module>STARTER-COMMON</module>
+        <module>STARTER-DATABASE</module>
     </modules>
 
     <properties>
