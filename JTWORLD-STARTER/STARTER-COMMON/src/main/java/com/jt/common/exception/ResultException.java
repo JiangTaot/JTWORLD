@@ -1,6 +1,6 @@
 package com.jt.common.exception;
 
-import com.jt.common.error.ResultCode;
+import com.jt.common.enums.ResultCode;
 import lombok.Getter;
 
 @Getter

@@ -14,6 +14,7 @@
         <module>JT-LEARNING/LEARNING-MINIO</module>
         <module>JT-LEARNING/LEARNING-SECURITY</module>
         <module>JTWORLD-STARTER</module>
+        <module>JTWORLD-ADMIN</module>
     </modules>
 
     <!--SpringBoot父工程-->

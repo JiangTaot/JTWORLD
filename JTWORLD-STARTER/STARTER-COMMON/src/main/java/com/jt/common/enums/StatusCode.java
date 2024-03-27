@@ -1,4 +1,4 @@
-package com.jt.common.error;
+package com.jt.common.enums;
 
 public interface StatusCode {
     String getCode();

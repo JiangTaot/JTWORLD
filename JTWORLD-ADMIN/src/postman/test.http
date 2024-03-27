@@ -1,0 +1,4 @@
+### 测试接口
+GET http://localhost:8888/admin/hello
+Accept: application/json
+
