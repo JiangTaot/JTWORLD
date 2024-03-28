@@ -1,18 +1,24 @@
 package com.jt.admin.controller;
 
+import com.jt.admin.dto.LoginDto;
 import com.jt.admin.service.JtAdminService;
+import com.jt.admin.vo.LoginVo;
 import com.jt.common.resp.BaseResult;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/admin")
+@RestController
 @AllArgsConstructor
+@RequestMapping("/admin")
 public class AdminController {
     private final JtAdminService adminService;
 
-    @GetMapping("/queryAdminName")
-    public BaseResult<String> queryAdminName() {
-        return BaseResult.success(adminService.getAdminName());
+    @PostMapping("/login")
+    public BaseResult<LoginVo> login(@Validated @RequestBody LoginDto loginDto) {
+        return BaseResult.success(adminService.login(loginDto.getUsername(), loginDto.getPassword()));
     }
 }

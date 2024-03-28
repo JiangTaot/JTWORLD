@@ -17,3 +17,30 @@ spring:
         login-username: druid
         login-password: druid
         enabled: true # 开启监控
+  redis:
+    host: localhost # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    timeout: 300ms # 连接超时时间（毫秒）
+
+# redis key 前缀
+pre-redis:
+  database: mall
+  key:
+    admin: 'jt:admin'
+  expire:
+    common: 86400 # 24小时
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+# 自定义安全路径
+secure:
+  ignored:
+    urls: # 安全路径白名单
+      - /admin/queryAdminName
+      - /admin/login
