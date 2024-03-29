@@ -1,5 +1,6 @@
 package com.jt.secure.config;
 
+import com.jt.secure.filters.JwtAuthenticationTokenFilter;
 import com.jt.secure.handler.RestAuthenticationEntryPoint;
 import com.jt.secure.handler.RestfulAccessDeniedHandler;
 import com.jt.secure.utils.JwtTokenUtil;
@@ -16,15 +17,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableConfigurationProperties(SecureIgnoreUrlsYml.class)
+@EnableConfigurationProperties({SecureIgnoreUrlsYml.class})
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
 
     private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity, SecureIgnoreUrlsYml secureIgnoreUrl) throws Exception {
@@ -44,7 +47,8 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 // 自定义权限拒绝处理类
                 .and().exceptionHandling().accessDeniedHandler(restfulAccessDeniedHandler).authenticationEntryPoint(restAuthenticationEntryPoint)
-        // 自定义权限拦截器JWT过滤器
+                // 自定义权限拦截器JWT过滤器
+                .and().addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
         ;
 
         return httpSecurity.build();

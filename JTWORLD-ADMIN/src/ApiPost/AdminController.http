@@ -1,3 +1,4 @@
+### 登录
 POST http://localhost:8888/admin/login
 Content-Type: application/json
 
@@ -6,11 +7,7 @@ Content-Type: application/json
   "password": "123123"
 }
 
-###
-GET http://localhost:8888/queryAdminName
+### 测试接口
+GET http://localhost:8888/admin/hello
 Accept: application/json
-
-###
-### 获取管理员名称
-GET http://localhost:8888/admin/queryAdminName
-
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKVEFETUlOIiwiY3JlYXRlZCI6MTcxMTY3ODQ2Mzc1NywiZXhwIjoxNzEyMjgzMjYzfQ.OKFWm58nF4fvz-2kKg9Oxa8ZIiV0pFmLIYG5rIzoDGexlOAUAFW_vkBPdCidyRQ7SZ5B0DCGoT-IoWPFoTW9UQ

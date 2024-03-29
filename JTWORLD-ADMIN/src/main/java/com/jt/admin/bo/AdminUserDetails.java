@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -20,7 +19,7 @@ public class AdminUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //返回当前用户所拥有的资源
-        return new ArrayList<>();
+        return null;
     }
 
     @Override
