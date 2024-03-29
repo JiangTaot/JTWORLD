@@ -53,7 +53,7 @@ secure:
       - /swagger-resources/**
       - /v2/**
 
-# knife4j 配置
+# knife4j 配置: localhost:8888/doc.html
 knife4j:
   title: 商城后台管理系统
   description: 商城后台管理系统
