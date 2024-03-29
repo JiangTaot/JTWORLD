@@ -39,6 +39,7 @@
         <velocity.version>1.7</velocity.version>
         <velocity-tools.version>2.0</velocity-tools.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <knife4j-spring-boot-starter.version>4.0.0</knife4j-spring-boot-starter.version>
     </properties>
 
     <!--全局依赖版本管理-->
@@ -90,6 +91,12 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+                <version>${knife4j-spring-boot-starter.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

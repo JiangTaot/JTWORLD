@@ -32,6 +32,7 @@ pre-redis:
   expire:
     common: 86400 # 24小时
 
+# jwt token 配置
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: mall-admin-secret #JWT加解密使用的密钥
@@ -44,3 +45,25 @@ secure:
     urls: # 安全路径白名单
       - /admin/queryAdminName
       - /admin/login
+      # knife4j 访问地址，生产环境禁止访问
+      - /doc.html
+      - /doc.html/**
+      - /webjars/**
+      - /swagger-resources
+      - /swagger-resources/**
+      - /v2/**
+
+
+# knife4j 配置
+knife4j:
+  title: 商城后台管理系统
+  description: 商城后台管理系统
+  serviceUrl: localhost:8888
+  groupName: 管理模块
+  basePackage: com.jt.admin.controller
+  author:
+    name: JTWORLD
+    url: https://github.com/JiangTaot/JTWORLD
+    email: 2547236893@qq.com
+  version: 1.0
+  enable: true
