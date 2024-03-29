@@ -2,6 +2,8 @@ server:
   port: 8888
 
 spring:
+  application:
+    name: JT-WORLD-ADMIN
   datasource:
     url: jdbc:mysql://localhost:3306/jt_world?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
@@ -66,3 +68,8 @@ knife4j:
     email: 2547236893@qq.com
   version: 1.0
   enable: true
+
+# 日志配置
+logging:
+  level:
+    root: info
