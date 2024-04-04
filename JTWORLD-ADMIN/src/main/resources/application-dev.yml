@@ -1,0 +1,75 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: JT-WORLD-ADMIN
+  datasource:
+    url: jdbc:mysql://localhost:3306/jt_world?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 123123
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        # Druid 管理页面访问路径 localhost:[端口号]/druid/login.html
+        login-username: druid
+        login-password: druid
+        enabled: true # 开启监控
+  redis:
+    host: localhost # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    timeout: 300ms # 连接超时时间（毫秒）
+
+# redis key 前缀
+pre-redis:
+  database: mall
+  key:
+    admin: 'jt:admin'
+  expire:
+    common: 86400 # 24小时
+
+# jwt token 配置
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+# 自定义安全路径
+secure:
+  ignored:
+    urls: # 安全路径白名单
+      - /admin/queryAdminName
+      - /admin/login
+      # knife4j 访问地址，生产环境禁止访问
+      - /doc.html
+      - /doc.html/**
+      - /webjars/**
+      - /swagger-resources
+      - /swagger-resources/**
+      - /v2/**
+
+# knife4j 配置: localhost:8888/doc.html
+knife4j:
+  title: 商城后台管理系统
+  description: 商城后台管理系统
+  serviceUrl: localhost:8888
+  groupName: 管理模块
+  basePackage: com.jt.admin.controller
+  author:
+    name: JTWORLD
+    url: https://github.com/JiangTaot/JTWORLD
+    email: 2547236893@qq.com
+  version: 1.0
+  enable: true
+
+# 日志配置
+logging:
+  level:
+    root: info
