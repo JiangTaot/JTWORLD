@@ -11,6 +11,12 @@ import java.util.List;
 @Setter
 @ConfigurationProperties(prefix = "secure.ignored")
 public class SecureIgnoreUrlsYml {
-
+    /**
+     * 加盐加密--盐
+     */
+    private String salt;
+    /**
+     * 白名单路径
+     */
     private List<String> urls = new ArrayList<>();
 }

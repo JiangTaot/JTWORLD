@@ -3,6 +3,7 @@ package com.jt.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jt.admin.entity.JtAdmin;
 import com.jt.admin.vo.LoginVo;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -15,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public interface JtAdminService extends IService<JtAdmin> {
 
-    LoginVo login(String username, String password);
+    LoginVo login(String username, String password) throws AuthenticationException;
 
     JtAdmin getAdminById(Long adminId);
 

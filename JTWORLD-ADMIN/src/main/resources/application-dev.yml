@@ -5,7 +5,7 @@ spring:
   application:
     name: JT-WORLD-ADMIN
   datasource:
-    url: jdbc:mysql://localhost:3306/jt_world?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://localhost:3306/jt_world?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 123123
     druid:
@@ -43,6 +43,7 @@ jwt:
 
 # 自定义安全路径
 secure:
+  salt: JT@WORLD#2024$taotaokankan
   ignored:
     urls: # 安全路径白名单
       - /admin/queryAdminName

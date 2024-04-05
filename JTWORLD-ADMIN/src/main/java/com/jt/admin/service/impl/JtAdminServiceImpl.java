@@ -1,6 +1,8 @@
 package com.jt.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jt.admin.bo.AdminUserDetails;
@@ -13,12 +15,12 @@ import com.jt.secure.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,16 +36,10 @@ import java.util.List;
 @Service
 @Slf4j
 public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> implements JtAdminService {
-
-    private PasswordEncoder passwordEncoder;
+    @Value("${secure.salt}")
+    private String salt;
     private JwtTokenUtil jwtTokenUtil;
     private JTAdminCacheService jtAdminCacheService;
-
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
     @Autowired
     public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
@@ -56,24 +52,20 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
     }
 
     @Override
-    public LoginVo login(String username, String password) {
-        String token = null;
-        try {
-            UserDetails userDetails = loadUserByUsername(username);
-            if (!StrUtil.equals(password, userDetails.getPassword())) {
-                log.info("密码错误: {}", password);
-                throw new AuthenticationException("密码错误");
-            }
-            if (!userDetails.isEnabled()) {
-                log.info("用户被禁用: {}", username);
-                throw new AuthenticationException("用户被禁用");
-            }
-            UsernamePasswordAuthenticationToken authenticated = UsernamePasswordAuthenticationToken.authenticated(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authenticated);
-            token = jwtTokenUtil.generateToken(userDetails);
-        } catch (AuthenticationException e) {
-            log.error("登录失败: {0}", e);
+    public LoginVo login(String username, String password) throws AuthenticationException {
+        String token;
+        UserDetails userDetails = loadUserByUsername(username);
+        if (!StrUtil.equals(SecureUtil.md5(password + salt), userDetails.getPassword())) {
+            log.info("密码错误: {}", password);
+            throw new AuthenticationException("密码错误");
         }
+        if (!userDetails.isEnabled()) {
+            log.info("用户被禁用: {}", username);
+            throw new AuthenticationException("用户被禁用");
+        }
+        UsernamePasswordAuthenticationToken authenticated = UsernamePasswordAuthenticationToken.authenticated(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authenticated);
+        token = jwtTokenUtil.generateToken(userDetails);
         return LoginVo.builder().token(token).username(username).build();
     }
 
@@ -98,7 +90,7 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
         if (admin != null) return admin;
         //缓存中没有从数据库中获取
         List<JtAdmin> adminList = this.baseMapper.selectList(new LambdaQueryWrapper<JtAdmin>().eq(JtAdmin::getUsername, username));
-        if (adminList != null && adminList.size() > 0) {
+        if (CollUtil.isNotEmpty(adminList)) {
             admin = adminList.get(0);
             //将数据库中的数据存入缓存中
             jtAdminCacheService.setAdmin(admin);

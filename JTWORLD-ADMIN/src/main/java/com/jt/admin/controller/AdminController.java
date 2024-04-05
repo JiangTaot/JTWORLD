@@ -7,6 +7,7 @@ import com.jt.common.resp.BaseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class AdminController {
 
     @ApiOperation(value = "登录")
     @PostMapping("/login")
-    public BaseResult<LoginVo> login(@Validated @RequestBody LoginDto loginDto) {
+    public BaseResult<LoginVo> login(@Validated @RequestBody LoginDto loginDto) throws AuthenticationException {
         return BaseResult.success(adminService.login(loginDto.getUsername(), loginDto.getPassword()));
     }
 }
