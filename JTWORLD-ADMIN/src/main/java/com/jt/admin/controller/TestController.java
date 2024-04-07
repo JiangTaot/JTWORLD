@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("")
 @Api(tags = "测试接口")
 public class TestController {
-    @GetMapping("/hello")
+    @GetMapping("/admin/hello")
     @ApiOperation(value = "测试接口")
-    public BaseResult<String> hello(){
+    public BaseResult<String> adminHello(){
+        return BaseResult.success("hello");
+    }
+
+    @GetMapping("/test/hello")
+    @ApiOperation(value = "测试接口")
+    public BaseResult<String> testHello(){
         return BaseResult.success("hello");
     }
 }

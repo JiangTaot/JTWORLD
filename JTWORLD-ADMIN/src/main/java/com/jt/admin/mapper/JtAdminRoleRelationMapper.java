@@ -2,7 +2,10 @@ package com.jt.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jt.admin.entity.JtAdminRoleRelation;
+import com.jt.admin.entity.JtResource;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface JtAdminRoleRelationMapper extends BaseMapper<JtAdminRoleRelation> {
 
+    List<JtResource> selectResourceList(Long adminId);
 }

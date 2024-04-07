@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -57,12 +58,12 @@ public class JtAdmin implements Serializable {
    * 创建时间
    */
   @TableField(fill = FieldFill.INSERT)
-  private LocalDateTime createTime;
+  private Date createTime;
 
   /**
    * 最后登录时间
    */
-  private LocalDateTime loginTime;
+  private Date loginTime;
 
   /**
    * 帐号启用状态：0->禁用；1->启用

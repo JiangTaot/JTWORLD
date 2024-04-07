@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(properties = "spring.profiles.active=dev")
+@SpringBootTest
 public class MD5Test {
 
     @Value("${secure.salt}")
@@ -16,7 +16,7 @@ public class MD5Test {
      */
     @Test
     public void md5Encrypt() {
-        String password = SecureUtil.md5("123456");
+        String password = SecureUtil.md5("123123");
         System.out.println("加密后: " + password);
 
         String passwordEncrypt = SecureUtil.md5(password + salt);

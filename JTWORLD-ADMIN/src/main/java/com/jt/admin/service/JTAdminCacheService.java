@@ -1,6 +1,9 @@
 package com.jt.admin.service;
 
 import com.jt.admin.entity.JtAdmin;
+import com.jt.admin.entity.JtResource;
+
+import java.util.List;
 
 /**
  * 后台用户缓存管理Service
@@ -22,4 +25,13 @@ public interface JTAdminCacheService {
      */
     void setAdmin(JtAdmin admin);
 
+    /**
+     * 缓存中获取后台用户资源
+     */
+    List<JtResource> getResouceList(Long adminId);
+
+    /**
+     * 设置后台用户资源
+     */
+    void setResourceList(Long adminId, List<JtResource> resourceList);
 }

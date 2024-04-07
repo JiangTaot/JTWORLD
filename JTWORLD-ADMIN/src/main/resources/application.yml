@@ -31,6 +31,7 @@ pre-redis:
   database: mall
   key:
     admin: 'jt:admin'
+    resourceList: 'jt:resourceList'
   expire:
     common: 86400 # 24小时
 
@@ -46,7 +47,6 @@ secure:
   salt: JT@WORLD#2024$taotaokankan
   ignored:
     urls: # 安全路径白名单
-      - /admin/queryAdminName
       - /admin/login
       # knife4j 访问地址，生产环境禁止访问
       - /doc.html

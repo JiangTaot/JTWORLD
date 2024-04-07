@@ -1,11 +1,15 @@
 package com.jt.secure.config;
 
+import com.jt.secure.filters.DynamicSecurityFilter;
 import com.jt.secure.filters.JwtAuthenticationTokenFilter;
 import com.jt.secure.handler.RestAuthenticationEntryPoint;
 import com.jt.secure.handler.RestfulAccessDeniedHandler;
+import com.jt.secure.intercept.DynamicAccessDecisionManager;
+import com.jt.secure.service.DynamicSecurityService;
 import com.jt.secure.utils.JwtTokenUtil;
 import com.jt.secure.yml.SecureIgnoreUrlsYml;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +21,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -28,6 +33,9 @@ public class SecurityConfig {
     private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    private final DynamicSecurityService dynamicSecurityService;
+    private final DynamicSecurityFilter dynamicSecurityFilter;
+    private final DynamicAccessDecisionManager dynamicAccessDecisionManager;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity, SecureIgnoreUrlsYml secureIgnoreUrl) throws Exception {
@@ -50,7 +58,11 @@ public class SecurityConfig {
                 // 自定义权限拦截器JWT过滤器
                 .and().addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
         ;
-
+        //有动态权限配置时添加动态权限校验过滤器
+        if (dynamicSecurityService != null) {
+            registry.and().authorizeRequests().accessDecisionManager(dynamicAccessDecisionManager)
+                    .and().addFilterBefore(dynamicSecurityFilter, FilterSecurityInterceptor.class);
+        }
         return httpSecurity.build();
 
     }

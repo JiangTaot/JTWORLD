@@ -4,10 +4,15 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "e10adc3949ba59abbe56e057f20f883e"
+  "password": "4297f44b13955235245b2497399d7a93"
 }
 
 ### 测试接口
 GET {{baseUrl}}/admin/hello
+Accept: application/json
+Authorization: {{auth_token}}
+
+### 测试接口
+GET {{baseUrl}}/test/hello
 Accept: application/json
 Authorization: {{auth_token}}

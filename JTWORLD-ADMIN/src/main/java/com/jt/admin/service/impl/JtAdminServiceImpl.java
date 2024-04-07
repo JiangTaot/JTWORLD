@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jt.admin.bo.AdminUserDetails;
 import com.jt.admin.entity.JtAdmin;
+import com.jt.admin.entity.JtResource;
 import com.jt.admin.mapper.JtAdminMapper;
 import com.jt.admin.service.JTAdminCacheService;
+import com.jt.admin.service.JtAdminRoleRelationService;
 import com.jt.admin.service.JtAdminService;
 import com.jt.admin.vo.LoginVo;
 import com.jt.secure.utils.JwtTokenUtil;
@@ -40,6 +42,8 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
     private String salt;
     private JwtTokenUtil jwtTokenUtil;
     private JTAdminCacheService jtAdminCacheService;
+    private JtAdminRoleRelationService jtAdminRoleRelationService;
+
     @Autowired
     public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
@@ -50,7 +54,10 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
     public void setJtAdminCacheService(JTAdminCacheService jtAdminCacheService) {
         this.jtAdminCacheService = jtAdminCacheService;
     }
-
+    @Autowired
+    public void setJtAdminRoleRelationService(JtAdminRoleRelationService jtAdminRoleRelationService) {
+        this.jtAdminRoleRelationService = jtAdminRoleRelationService;
+    }
     @Override
     public LoginVo login(String username, String password) throws AuthenticationException {
         String token;
@@ -79,9 +86,22 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
         //获取用户信息
         JtAdmin admin = getAdminByUsername(username);
         if (admin != null) {
-            return new AdminUserDetails(admin);
+            List<JtResource> resourceList = getResourceList(admin.getId());
+            return new AdminUserDetails(admin, resourceList);
         }
         throw new UsernameNotFoundException("用户名或密码错误");
+    }
+
+    private List<JtResource> getResourceList(Long adminId) {
+        List<JtResource> resourceList = jtAdminCacheService.getResouceList(adminId);
+        if (CollUtil.isNotEmpty(resourceList)) {
+            return resourceList;
+        }
+        resourceList = jtAdminRoleRelationService.getResourceList(adminId);
+        if (CollUtil.isNotEmpty(resourceList)){
+            jtAdminCacheService.setResourceList(adminId, resourceList);
+        }
+        return resourceList;
     }
 
     public JtAdmin getAdminByUsername(String username) {
@@ -98,4 +118,6 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
         }
         return null;
     }
+
+
 }

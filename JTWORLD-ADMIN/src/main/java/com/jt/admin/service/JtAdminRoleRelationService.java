@@ -2,6 +2,9 @@ package com.jt.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jt.admin.entity.JtAdminRoleRelation;
+import com.jt.admin.entity.JtResource;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.jt.admin.entity.JtAdminRoleRelation;
  */
 public interface JtAdminRoleRelationService extends IService<JtAdminRoleRelation> {
 
+    List<JtResource> getResourceList(Long adminId);
 }
