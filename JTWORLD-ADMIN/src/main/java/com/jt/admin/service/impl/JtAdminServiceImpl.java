@@ -5,7 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
 import com.jt.admin.bo.AdminUserDetails;
+import com.jt.admin.dto.AdminDto;
 import com.jt.admin.entity.JtAdmin;
 import com.jt.admin.entity.JtResource;
 import com.jt.admin.mapper.JtAdminMapper;
@@ -13,6 +15,7 @@ import com.jt.admin.service.JTAdminCacheService;
 import com.jt.admin.service.JtAdminRoleRelationService;
 import com.jt.admin.service.JtAdminService;
 import com.jt.admin.vo.LoginVo;
+import com.jt.common.resp.BasePage;
 import com.jt.secure.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
@@ -119,5 +122,10 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
         return null;
     }
 
+    @Override
+    public List<JtAdmin> getList(AdminDto adminDto) {
+        BasePage.paramPage(adminDto.getPageNum(), adminDto.getPageSize(), adminDto.getIsAll());
+        return this.baseMapper.selectList(null);
+    }
 
 }

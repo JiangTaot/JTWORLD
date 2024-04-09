@@ -1,8 +1,11 @@
 package com.jt.admin.controller;
 
+import com.jt.admin.dto.AdminDto;
 import com.jt.admin.dto.LoginDto;
+import com.jt.admin.entity.JtAdmin;
 import com.jt.admin.service.JtAdminService;
 import com.jt.admin.vo.LoginVo;
+import com.jt.common.resp.BasePage;
 import com.jt.common.resp.BaseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,5 +28,11 @@ public class AdminController {
     @PostMapping("/login")
     public BaseResult<LoginVo> login(@Validated @RequestBody LoginDto loginDto) throws AuthenticationException {
         return BaseResult.success(adminService.login(loginDto.getUsername(), loginDto.getPassword()));
+    }
+
+    @ApiOperation("获取管理员列表")
+    @PostMapping("/list")
+    public BaseResult<BasePage<JtAdmin>> list(@Validated @RequestBody AdminDto adminDto){
+        return BaseResult.success(BasePage.restPage(adminService.getList(adminDto)));
     }
 }

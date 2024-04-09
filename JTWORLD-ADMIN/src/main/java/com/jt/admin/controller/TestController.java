@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "测试接口")
 public class TestController {
     @GetMapping("/admin/hello")
-    @ApiOperation(value = "测试接口")
+    @ApiOperation(value = "admin测试接口")
     public BaseResult<String> adminHello(){
         return BaseResult.success("hello");
     }
 
     @GetMapping("/test/hello")
-    @ApiOperation(value = "测试接口")
+    @ApiOperation(value = "test测试接口")
     public BaseResult<String> testHello(){
         return BaseResult.success("hello");
     }
     @GetMapping("/order/hello")
-    @ApiOperation(value = "测试接口")
+    @ApiOperation(value = "order测试接口")
     public BaseResult<String> orderHello(){
         return BaseResult.success("hello");
     }
 
     @GetMapping("/hi/hello")
-    @ApiOperation(value = "测试接口")
+    @ApiOperation(value = "hi测试接口")
     public BaseResult<String> hiHello(){
         return BaseResult.success("hello");
     }

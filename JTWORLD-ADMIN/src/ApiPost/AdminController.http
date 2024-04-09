@@ -7,6 +7,17 @@ Content-Type: application/json
   "password": "4297f44b13955235245b2497399d7a93"
 }
 
+### 获取管理员列表
+POST {{baseUrl}}/admin/list
+Content-Type: application/json
+Authorization: {{auth_token}}
+
+{
+  "pageNum": 1,
+  "pageSize": 1,
+  "isAll": false
+}
+
 ### admin测试接口
 GET {{baseUrl}}/admin/hello
 Accept: application/json

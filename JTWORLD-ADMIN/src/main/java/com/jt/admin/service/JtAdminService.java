@@ -1,10 +1,14 @@
 package com.jt.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jt.admin.dto.AdminDto;
 import com.jt.admin.entity.JtAdmin;
 import com.jt.admin.vo.LoginVo;
+import com.jt.common.resp.BasePage;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,4 +35,6 @@ public interface JtAdminService extends IService<JtAdmin> {
      * @param username 用户名
      */
     JtAdmin getAdminByUsername(String username);
+
+    List<JtAdmin> getList(AdminDto adminDto);
 }
