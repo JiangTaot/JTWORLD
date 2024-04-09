@@ -7,12 +7,22 @@ Content-Type: application/json
   "password": "4297f44b13955235245b2497399d7a93"
 }
 
-### 测试接口
+### admin测试接口
 GET {{baseUrl}}/admin/hello
 Accept: application/json
 Authorization: {{auth_token}}
 
-### 测试接口
+### test测试接口
 GET {{baseUrl}}/test/hello
+Accept: application/json
+Authorization: {{auth_token}}
+
+### order测试接口
+GET {{baseUrl}}/order/hello
+Accept: application/json
+Authorization: {{auth_token}}
+
+### hi测试接口
+GET {{baseUrl}}/hi/hello
 Accept: application/json
 Authorization: {{auth_token}}

@@ -1,8 +1,10 @@
 package com.jt.secure.intercept;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.URLUtil;
 import com.jt.secure.service.DynamicSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -52,6 +54,10 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
             if (pathMatcher.match(pattern, path)) {
                 configAttributes.add(configAttributeMap.get(pattern));
             }
+        }
+        // 请求接口不在配置的资源列表中
+        if (CollUtil.isEmpty(configAttributes)){
+            throw new AccessDeniedException("您请求的服务不存在");
         }
         // 未设置操作请求权限，返回空集合
         return configAttributes;
