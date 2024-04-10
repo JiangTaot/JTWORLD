@@ -1,6 +1,7 @@
 package com.jt.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -9,13 +10,16 @@ import com.github.pagehelper.PageHelper;
 import com.jt.admin.bo.AdminUserDetails;
 import com.jt.admin.dto.AdminDto;
 import com.jt.admin.entity.JtAdmin;
+import com.jt.admin.entity.JtAdminLoginLog;
 import com.jt.admin.entity.JtResource;
 import com.jt.admin.mapper.JtAdminMapper;
 import com.jt.admin.service.JTAdminCacheService;
+import com.jt.admin.service.JtAdminLoginLogService;
 import com.jt.admin.service.JtAdminRoleRelationService;
 import com.jt.admin.service.JtAdminService;
 import com.jt.admin.vo.LoginVo;
 import com.jt.common.resp.BasePage;
+import com.jt.common.utils.RequestUtil;
 import com.jt.secure.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
@@ -27,7 +31,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,6 +56,7 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
     private JwtTokenUtil jwtTokenUtil;
     private JTAdminCacheService jtAdminCacheService;
     private JtAdminRoleRelationService jtAdminRoleRelationService;
+    private JtAdminLoginLogService jtAdminLoginLogService;
 
     @Autowired
     public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
@@ -76,7 +87,19 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
         UsernamePasswordAuthenticationToken authenticated = UsernamePasswordAuthenticationToken.authenticated(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticated);
         token = jwtTokenUtil.generateToken(userDetails);
+        // 记录登录日志
+        insertLoginLog(username);
         return LoginVo.builder().token(token).username(username).build();
+    }
+
+    private void insertLoginLog(String username) {
+        JtAdmin jtAdmin = getAdminByUsername(username);
+        if (jtAdmin == null) return;
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        Assert.notNull(attributes);
+        HttpServletRequest request = attributes.getRequest();
+        JtAdminLoginLog loginLog = JtAdminLoginLog.builder().adminId(jtAdmin.getId()).createTime(LocalDateTime.now()).ip(RequestUtil.getRequestIp(request)).build();
+        jtAdminLoginLogService.save(loginLog);
     }
 
     @Override
@@ -128,4 +151,8 @@ public class JtAdminServiceImpl extends ServiceImpl<JtAdminMapper, JtAdmin> impl
         return this.baseMapper.selectList(null);
     }
 
+    @Autowired
+    public void setJtAdminLoginLogService(JtAdminLoginLogService jtAdminLoginLogService) {
+        this.jtAdminLoginLogService = jtAdminLoginLogService;
+    }
 }
