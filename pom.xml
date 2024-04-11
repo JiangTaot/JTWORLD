@@ -15,6 +15,7 @@
         <module>JT-LEARNING/LEARNING-SECURITY</module>
         <module>JTWORLD-STARTER</module>
         <module>JTWORLD-ADMIN</module>
+        <module>JT-LEARNING/LEARNING-OAUTH2</module>
     </modules>
 
     <!--SpringBoot父工程-->
