@@ -3,9 +3,10 @@ server:
 
 logging:
   level:
-    root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
+    root: debug
+    org.springframework.web: debug
+    org.springframework.security: debug
+    org.springframework.security.oauth2.client: debug
 
 spring:
   thymeleaf:
@@ -17,3 +18,15 @@ spring:
           github:
             client-id: aed3fb28b921a579172c
             client-secret: 8a1dfd12e7ef4e696bdfc571cd43093282bca422
+          jtworld:
+            client-id: jtworld111
+            client-secret: 123123
+            authorization-grant-type: authorization_code
+            redirect-uri: http://127.0.0.1:8889/login/oauth2/code/jtworld
+            scope: openid,profile
+        provider:
+          jtworld:
+            authorization-uri: http://localhost:8889/oauth2/authorize
+            token-uri: http://localhost:8889/oauth2/token
+            user-info-uri: http://localhost:8889/user
+            userNameAttribute: name

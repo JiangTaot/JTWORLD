@@ -1,0 +1,28 @@
+server:
+  port: 8889
+
+logging:
+  level:
+    org.springframework.security: trace
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          oidc-client:
+            registration:
+              client-id: test
+              client-secret: 123123
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8888/login/oauth2/code/jtworld"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8888/"
+              scopes:
+                - "openid"
+                - "profile"
+            require-authorization-consent: true
