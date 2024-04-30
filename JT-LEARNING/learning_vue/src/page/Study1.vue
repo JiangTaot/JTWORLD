@@ -30,6 +30,11 @@
 </script>
 
 <style scoped>
+p::first-line {
+  color: red;
+}
+
+
 body {
   background-color: #fff;
   color: #333;
@@ -66,5 +71,9 @@ a:visited {
 
 a:hover {
   text-decoration: none;
+}
+
+li {
+  list-style-type: none;
 }
 </style>
