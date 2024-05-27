@@ -8,9 +8,12 @@
     </parent>
 
     <artifactId>JT-LEARNING</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>JT-LEARNING</name>
+    <modules>
+        <module>LEARNING-SATOKEN</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
